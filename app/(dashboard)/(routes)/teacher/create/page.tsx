@@ -25,7 +25,7 @@ const formSchema = z.object({
     message: "Title must be at least one character long"
   }),
 });
-export default function page() {
+export default function CreateCoursePage() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,7 +50,7 @@ export default function page() {
     <div className='max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6'>
       <div className="">
         <h1 className='text-2xl'>Name Your Course</h1>
-        <p className='text-sm text-slate-600'>What would you like to change your course? Don't worry you can change it later</p>
+        <p className='text-sm text-slate-600'>What would you like to change your course? Don&apos;t worry you can change it later</p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}
             className='space-y-8 mt-8'
