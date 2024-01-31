@@ -1,11 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import { Chapter, Course, UserProgress } from "@prisma/client"
 import { redirect } from "next/navigation";
-
+import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { CourseProgress } from "@/components/course-progress";
 
 import { CourseSidebarItem } from "./course-sidebar-item";
+import Link from "next/link";
 
 interface CourseSidebarProps {
   course: Course & {
@@ -37,10 +38,16 @@ export const CourseSidebar = async ({
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="p-8 flex flex-col border-b">
+      <div className="p-8 pt-4 flex flex-col border-b">
+        <Link href="/">
+      <div className="p-2 pl-0">
+          <p className=" text-sm">Back</p>
+        </div>
+        </Link>
         <h1 className="font-semibold">
           {course.title}
         </h1>
+     
         {purchase && (
           <div className="mt-10">
             <CourseProgress
