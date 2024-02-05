@@ -2,34 +2,36 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+// import { isTeacher } from "@/lib/teacher";
 
 export async function POST(
   req: Request,
 ) {
   try {
     const { userId } = auth();
-    const { title } = await req.json();
+    const { name } = await req.json();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if(!userId){
+        return new NextResponse("Unauthorized", { status: 401 });
     }
     const isteacher = await db.teacher.findUnique({
-      where:{
-        userId
-      }
+        where: {
+            userId
+        }
     })
-    if (!isteacher) {
-      return new NextResponse("Unauthorized", { status: 401 });
+
+    if (isteacher) {
+      return new NextResponse("[ADD TEACHER] Data already exists", { status: 409 });
     }
 
-    const course = await db.course.create({
+    const teacher = await db.teacher.create({
       data: {
         userId,
-        title,
+        name,
       }
     });
 
-    return NextResponse.json(course);
+    return NextResponse.json(teacher);
   } catch (error) {
     console.log("[COURSES]", error);
     return new NextResponse("Internal Error", { status: 500 });

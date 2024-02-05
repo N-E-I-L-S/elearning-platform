@@ -37,7 +37,7 @@ export const SidebarRoutes = () => {
   const isTeacherPage = pathname?.includes("/teacher");
 
   const routes = isTeacherPage ? teacherRoutes : guestRoutes;
-//   const routes = guestRoutes;
+  // const routes = guestRoutes;
 
   return (
     <div className="flex flex-col w-full">

@@ -1,16 +1,30 @@
 import { auth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-
-import { isTeacher } from "@/lib/teacher";
+import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
+// import { isTeacher } from "@/lib/teacher";
  
 const f = createUploadthing();
- 
+
+async function isTeacher(userId:string){
+
+  const res = await db.teacher.findUnique({
+    where:{
+      userId
+    }
+  })
+}
+
 const handleAuth = () => {
   const { userId } = auth();
-  const isAuthorized = isTeacher(userId);
 
-  if (!userId || !isAuthorized) throw new Error("Unauthorized");
-  return { userId };
+  if(userId)
+  {
+    const isAuthorized = isTeacher(userId); 
+    if (!userId || !isAuthorized) throw new Error("Unauthorized");
+    return { userId };
+  }
+  return {userId}
 }
 
 export const ourFileRouter = {
