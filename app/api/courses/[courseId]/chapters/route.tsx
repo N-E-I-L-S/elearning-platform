@@ -18,7 +18,7 @@ export async function POST(
                     userId
                 }
             })
-            if(isteacher)
+            if(!isteacher)
             return new NextResponse("Not authenticated", {status: 401})
 
             const courseOwner = await db.course.findUnique(

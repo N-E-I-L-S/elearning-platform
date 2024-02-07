@@ -65,7 +65,8 @@ export async function POST(
     });
 
     if (!stripeCustomer) {
-      const customer = await stripe.customers.create({
+      let customer = await stripe.customers.create({
+        name: user.emailAddresses[0].emailAddress,
         email: user.emailAddresses[0].emailAddress,
         address:{
             city : "Mumbai", 
